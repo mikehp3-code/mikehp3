@@ -51,8 +51,8 @@
     }
 
     .art {
-      width: min(280px, 85vw);
-      margin: 0 auto 14px;
+      width: min(320px, 85vw);
+      margin: 0 auto 16px;
       display: block;
       border-radius: 18px;
       box-shadow: 0 10px 24px rgba(0,0,0,.12);
@@ -61,6 +61,11 @@
     h1 {
       font-size: clamp(26px, 4vw, 44px);
       margin: 12px 0 18px;
+    }
+
+    h2 {
+      font-size: clamp(30px, 4.5vw, 46px);
+      margin: 10px 0 18px;
     }
 
     .button-zone {
@@ -103,16 +108,6 @@
       font-size: 13px;
       opacity: .7;
     }
-
-    .result {
-      display: none;
-      animation: pop .35s ease;
-    }
-
-    @keyframes pop {
-      from { transform: scale(.96); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
   </style>
 </head>
 
@@ -120,29 +115,34 @@
   <canvas id="confettiCanvas"></canvas>
 
   <main class="card">
-    <!-- IMAGE BEFORE YES -->
-    <img id="beforeImg" class="art" src="gemini.png" alt="Before" />
 
-    <!-- IMAGE AFTER YES -->
-    <img id="afterImg" class="art" src="gemini2.png" alt="After" style="display:none;" />
+    <!-- BEFORE YES -->
+    <div id="preYes">
+      <img class="art" src="gemini.png" alt="Before" />
+      <h1>Sophia will you be my valentine?</h1>
 
-    <h1>Sophia will you be my valentine?</h1>
+      <section class="button-zone" id="zone">
+        <button id="yesBtn" type="button">Yes</button>
+        <button id="noBtn" type="button">No</button>
+      </section>
 
-    <section class="button-zone" id="zone">
-      <button id="yesBtn">Yes</button>
-      <button id="noBtn">No</button>
-    </section>
+      <div class="hint" id="hint">“No” seems a bit shy</div>
+    </div>
 
-    <div class="hint" id="hint">“No” seems a bit shy</div>
+    <!-- AFTER YES -->
+    <div id="postYes" style="display:none;">
+      <h2>YAY!</h2>
+      <img class="art" src="gemini2.png" alt="After" />
+    </div>
+
   </main>
 
   <script>
     const zone = document.getElementById("zone");
     const yesBtn = document.getElementById("yesBtn");
     const noBtn = document.getElementById("noBtn");
-    const hint = document.getElementById("hint");
-    const beforeImg = document.getElementById("beforeImg");
-    const afterImg = document.getElementById("afterImg");
+    const preYes = document.getElementById("preYes");
+    const postYes = document.getElementById("postYes");
 
     /* CONFETTI */
     const confettiCanvas = document.getElementById("confettiCanvas");
@@ -220,10 +220,8 @@
 
     /* YES CLICK */
     yesBtn.addEventListener("click", () => {
-      beforeImg.style.display = "none";
-      afterImg.style.display = "block";
-      zone.style.display = "none";
-      hint.style.display = "none";
+      preYes.style.display = "none";
+      postYes.style.display = "block";
       resizeConfettiCanvas();
       fullScreenConfetti();
     });
